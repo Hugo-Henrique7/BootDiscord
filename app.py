@@ -1,20 +1,11 @@
-import discord
+from flask import Flask
 
-intents = discord.Intents.default()
-intents.message_content = True
+app = Flask(__name__)
 
-client = discord.Client(intents=intents)
+@app.route("/")
+def hello_world():
+    return "<p>Hello, World!</p>"
 
-@client.event
-async def on_ready():
-    print(f'We have logged in as {client.user}')
-
-@client.event
-async def on_message(message):
-    if message.author == client.user:
-        return
-
-    if message.content.startswith('$hello'):
-        await message.channel.send('Hello!')
-
-client.run('your token here')
+if __name__ == "__main__":
+    print("Servidor está rodando em http://127.0.0.1:5000")
+    app.run(debug=True)
